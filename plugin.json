@@ -3,7 +3,7 @@
   "name": "NeoDocs",
   "version": "1.1.1",
   "author": "NDesumeur",
-  "description": "Un traitement de texte : styles, polices, listes, tableaux, images, recherche, correcteur FR/EN. Ouvre .docx, .html, .md, .txt ; exporte PDF, Word, HTML, Markdown.",
+  "description": "Un traitement de texte complet : titres et styles, polices, couleurs, listes à puces, numérotées ou de tâches, tableaux, images, liens et sauts de page, rechercher et remplacer, plan du document et correcteur d'orthographe français et anglais. Ouvre les fichiers Word, HTML, Markdown et texte, exporte en PDF, Word, HTML, texte ou Markdown ; tes documents sont enregistrés tout seuls et synchronisés.",
   "icon": "icon.png",
   "entry": "index.js",
   "view": "docs",
