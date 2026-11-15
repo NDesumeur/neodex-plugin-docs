@@ -5,14 +5,14 @@ const HTML = "";
 /*CSS-MOVED*/ const CSS = `.ofMenu .tbtn{justify-content:flex-start;font:14px var(--text);letter-spacing:0}
 .ofDropM .tbtn{justify-content:flex-start;font:14px var(--text);letter-spacing:0}
 .ofApp{display:flex;background:var(--bg0)}
-.ofSide{width:260px;flex:none;display:flex;flex-direction:column;gap:10px;padding:18px 14px;border-right:3px solid var(--line);background:rgba(var(--d8),.6);overflow:hidden}
+.ofSide{width:clamp(220px,15vw,300px);flex:none;display:flex;flex-direction:column;gap:10px;padding:18px 14px;border-right:3px solid var(--line);background:rgba(var(--d8),.6);overflow:hidden}
 .ofSide .row{gap:8px}
-.ofSide .btn{flex:1;padding:8px 6px;font-size:9px}
-.ofSearch{padding:7px 10px;font-size:14px}
+.ofSide .btn{flex:1;padding:9px 6px;font-size:11px}
+.ofSearch{padding:8px 10px;font-size:15px}
 .ofList{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:2px;margin:0 -6px;padding:0 6px}
 .ofItem{all:unset;cursor:var(--cp,pointer);display:flex;flex-direction:column;gap:2px;padding:8px 10px;color:var(--lilac)}
-.ofItem .n{color:#fff;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ofItem .hint{font-size:12px}
+.ofItem .n{color:#fff;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ofItem .hint{font-size:14px}
 .ofItem:hover{background:rgba(255,255,255,.04)}
 .ofItem.on{background:rgba(var(--mgr),.18);box-shadow:inset 3px 0 0 var(--magenta)}
 .ofBody{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -25,7 +25,7 @@ const HTML = "";
 .f.ofTitle{margin:12px 16px 0;width:auto;align-self:stretch;font-size:18px;padding:8px 12px;background:transparent;box-shadow:none}
 .ofTitle:focus{background:var(--field)}
 .ofBar{display:flex;flex-wrap:wrap;gap:3px;align-items:center;padding:8px 14px;border-bottom:3px solid var(--line)}
-.ofTb{all:unset;cursor:var(--cp,pointer);min-width:30px;height:30px;padding:0 7px;display:grid;place-items:center;color:var(--lilac);font-size:15px;background:var(--btn)}
+.ofTb{all:unset;cursor:var(--cp,pointer);min-width:34px;height:34px;padding:0 8px;display:grid;place-items:center;color:var(--lilac);font-size:16px;background:var(--btn)}
 .ofTb:hover{background:var(--btnh);color:#fff}
 .ofTb.on{background:rgba(var(--mgr),.4);color:#fff}
 .ofTb.b{font-weight:bold}
@@ -33,15 +33,15 @@ const HTML = "";
 .ofTb.u{text-decoration:underline}
 .ofTb.s{text-decoration:line-through}
 .ofSep{width:2px;height:22px;background:var(--line);margin:0 4px}
-.ofSel{height:30px;padding:0 6px;font-size:14px}
+.ofSel{height:34px;padding:0 6px;font-size:15px}
 .ofColor{width:30px;height:30px;padding:0;border:0;background:none;cursor:var(--cp,pointer)}
 .ofDrop{position:relative}
-.ofDrop .ofTb{font-size:14px}
-.ofDropM{position:absolute;top:34px;left:0;z-index:20;--fill:var(--win);--c:var(--line2);display:none;flex-direction:column;min-width:210px;padding:6px;filter:drop-shadow(0 4px 0 var(--out))}
+.ofDrop .ofTb{font-size:15px}
+.ofDropM{position:absolute;top:38px;left:0;z-index:20;--fill:var(--win);--c:var(--line2);display:none;flex-direction:column;min-width:210px;padding:6px;filter:drop-shadow(0 4px 0 var(--out))}
 .ofDrop.on .ofDropM{display:flex}
 .ofDropM .tbtn{padding:8px 10px}
 .ofDropM .tbtn:hover{background:rgba(var(--mgr),.16);color:#fff}
-.ofStatus{padding:6px 16px;font-size:13px;color:var(--muted);border-top:3px solid var(--line)}
+.ofStatus{padding:7px 16px;font-size:15px;color:var(--muted);border-top:3px solid var(--line)}
 .dcRow{flex:1;min-height:0;display:flex}
 .dcWrap{flex:1;overflow:auto;background:#2a2238;padding:28px 0 60px}
 .dcPage{width:794px;min-height:1123px;margin:0 auto;padding:90px 96px;background:#fff;color:#1d1d1f;font:12pt/1.5 Calibri,'Segoe UI',Arial,sans-serif;box-shadow:0 6px 0 rgba(0,0,0,.35);outline:none;user-select:text;cursor:text;
@@ -68,14 +68,21 @@ const HTML = "";
 .dcPage hr{border:0;border-top:1px solid #bbb}
 .dcOutline{width:230px;flex:none;--fill:var(--win);display:none;flex-direction:column;gap:4px;padding:14px;overflow-y:auto}
 .dcOutline.on{display:flex}
-.dcOl{all:unset;cursor:var(--cp,pointer);color:var(--lilac);font-size:14px;padding:4px 6px}
+.dcOl{all:unset;cursor:var(--cp,pointer);color:var(--lilac);font-size:15px;padding:4px 6px}
 .dcOl:hover{color:#fff;background:rgba(var(--mgr),.15)}
 .dcOl.l2{padding-left:18px}
-.dcOl.l3{padding-left:30px;font-size:13px}
+.dcOl.l3{padding-left:30px;font-size:14px}
 .dcFind{display:none;gap:6px;align-items:center;padding:8px 14px;--fill:var(--win)}
 .dcFind.on{display:flex}
-.dcFind input{width:200px;padding:6px 10px;font-size:14px}
-.dcFind .btn{padding:6px 10px;font-size:9px}
+.dcFind input{width:clamp(180px,14vw,280px);padding:7px 10px;font-size:15px}
+.dcFind .btn{padding:7px 10px;font-size:11px}
+.ofTb.dcReadB{color:#fff}
+.dcReading{position:relative}.dcReading>.ofSide,.dcReading .ofTitle,.dcReading .ofBar,.dcReading .dcFind,.dcReading .ofStatus,.dcReading .dcOutline{display:none!important}
+.dcReading .dcWrap{background:#16111f;padding:40px 0 80px}
+.dcReading .dcPage{cursor:default;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.dcReadBar{display:none;position:absolute;top:12px;right:22px;z-index:5;gap:8px;align-items:center}
+.dcReading .dcReadBar{display:flex}
+.dcReadBar .btn{width:auto;margin:0;padding:8px 12px;font-size:11px;opacity:.55}.dcReadBar .btn:hover{opacity:1}
 .shGrid td.num{text-align:right}
 `;  // le style de ce plugin (il utilise les variables du thème de NeoDex)
 export default async function (ctx) {
@@ -358,7 +365,8 @@ dc.mount = main => {
     ofDrop('Image', [['25 % de la largeur', () => dcImg('25%')], ['50 %', () => dcImg('50%')], ['75 %', () => dcImg('75%')], ['Pleine largeur', () => dcImg('100%')], ['Supprimer l\'image', () => { dc.img?.remove(); dc.img = null; dcChanged(); }]], 'Taille de l\'image cliquée'),
     ofBtn('⌫', 'Effacer la mise en forme', () => { cmd('removeFormat'); cmd('formatBlock', 'p'); }), el('i', 'ofSep'),
     ofBtn('🔍', 'Rechercher et remplacer (Ctrl+H dans le document)', () => dcFindOpen()), ofBtn('☰', 'Plan du document', () => { outline.classList.toggle('on'); dcOutline(); }),
-    ofDrop('Zoom', [['75 %', () => dcZoom(.75)], ['100 %', () => dcZoom(1)], ['125 %', () => dcZoom(1.25)], ['150 %', () => dcZoom(1.5)]], 'Zoom'),
+    ofBtn('📖', 'Lecture plein écran (Échap pour sortir)', () => dcRead(true), 'dcReadB'),
+    ofDrop('Zoom', [['Ajuster à la largeur', () => dcZoom('fit')], ['75 %', () => dcZoom(.75)], ['100 %', () => dcZoom(1)], ['125 %', () => dcZoom(1.25)], ['150 %', () => dcZoom(1.5)]], 'Zoom'),
     ofDrop('Exporter', [['PDF…', () => ofExport(dc, 'pdf')], ['Word (.doc)…', () => ofExport(dc, 'doc')], ['Page web (.html)…', () => ofExport(dc, 'html')], ['Texte (.txt)…', () => ofExport(dc, 'txt')], ['Markdown (.md)…', () => ofExport(dc, 'md')]], 'Exporter le document'),
     imgIn);
   // find and replace inside the document
@@ -367,8 +375,10 @@ dc.mount = main => {
   const fbtn = (l, f) => { const b = el('button', 'btn px', l); b.onclick = f; return b; };
   fr.append(fq, rq, fbtn('SUIVANT', () => dcFind(1)), fbtn('REMPLACER', () => dcReplace(false)), fbtn('TOUT', () => dcReplace(true)), fcount, fbtn('X', () => { fr.classList.remove('on'); neoFindRun(page, '', {}, 0); }));
   fq.oninput = () => dcFind(0); fq.onkeydown = e => { if (e.key === 'Enter') dcFind(e.shiftKey ? -1 : 1); if (e.key === 'Escape') fr.classList.remove('on'); };
+  const rb = el('div', 'dcReadBar'), rbig = el('button', 'btn px', 'A+'), rsmall = el('button', 'btn px', 'A−'), rout = el('button', 'btn px', 'QUITTER LA LECTURE');
+  rbig.onclick = () => dcZoom(Math.min(2.4, dcZ() + .15)); rsmall.onclick = () => dcZoom(Math.max(.6, dcZ() - .15)); rout.onclick = () => dcRead(false); rb.append(rsmall, rbig, rout);
   wrap.append(page);
-  main.append(title, bar, fr, el('div', 'dcRow'), status);
+  main.append(title, bar, fr, el('div', 'dcRow'), status, rb);
   main.querySelector('.dcRow').append(wrap, outline);
   Object.assign(dc, {page, title, status, outline, size, style, font, fr, fq, rq, fcount, wrap});
   title.oninput = () => { if (dc.cur) { dc.cur.name = title.value.trim() || 'Sans titre'; ofTouch(dc, dc.cur); } };
@@ -425,7 +435,21 @@ async function dcTable() {
   dc.page.focus(); document.execCommand('insertHTML', false, '<table>' + [...Array(rows)].map((_, i) => tr(i)).join('') + '</table><p><br></p>'); dcChanged();
 }
 function dcImg(w) { if (!dc.img) return toast('Clique d\'abord sur une image du document', true); dc.img.style.width = w; dc.img.style.height = 'auto'; dcChanged(); }
-function dcZoom(z) { dc.page.style.zoom = z; dc.zoom = z; }
+const dcZ = () => +dc.page.style.zoom || 1;
+function dcZoom(z) {  // 'fit' : la page de 794 px tient dans la largeur (jamais plus grande que 100 %, 135 % en lecture)
+  dc.zoom = z; if (z !== 'fit') { dc.page.style.zoom = z; return; }
+  const w = dc.wrap.clientWidth; if (!w) return;
+  dc.page.style.zoom = Math.max(.45, Math.min(dc.reading ? 1.35 : 1, (w - 40) / 794)).toFixed(3);
+}
+addEventListener('resize', () => { if (dc.zoom === 'fit' || dc.zoom == null) dcZoom('fit'); });
+function dcRead(on) {  // la lecture : rien que la page, en plein écran, sans pouvoir la modifier par mégarde
+  const v = $(dc.view); if (!dc.cur && on) return;
+  dc.reading = on; v.classList.toggle('dcReading', on); dc.page.contentEditable = on ? 'false' : 'true';
+  if (on) { dc.zoomBefore = dc.zoom; v.requestFullscreen?.().catch(() => {}); dcZoom('fit'); dc.wrap.focus?.(); }
+  else { if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); dcZoom(dc.zoomBefore ?? 'fit'); }
+}
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && dc.reading) dcRead(false); else if (dc.reading) dcZoom('fit'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && dc.reading) { e.preventDefault(); dcRead(false); } });
 function dcOutline() {
   const hs = [...dc.page.querySelectorAll('h1,h2,h3')];
   dc.outline.replaceChildren(el('span', 'label', 'Plan'), ...(hs.length ? hs.map(h => { const b = el('button', 'dcOl l' + h.nodeName[1], h.textContent || '(titre vide)'); b.onclick = () => h.scrollIntoView({block: 'start', behavior: 'smooth'}); return b; }) : [el('div', 'hint', 'Les titres du document apparaissent ici.')]));
@@ -464,10 +488,11 @@ async function dcSpell() {
 document.addEventListener('neo-spell-dict', () => dcSpell());
 dc.open = f => {
   dc.cur = f; dc.title.value = f.name; dc.page.innerHTML = f.data.html; dc.img = null;
+  if (dc.zoom == null || dc.zoom === 'fit') requestAnimationFrame(() => dcZoom('fit'));
   neoFindRun(dc.page, '', {}, 0); dc.fr.classList.remove('on'); CSS.highlights?.delete('neo-spell'); dc.spellN = 0; dcStatus(); dcOutline(); setTimeout(dcSpell, 300);
 };
-dc.close = () => { dc.cur = null; };
+dc.close = () => { if (dc.reading) dcRead(false); dc.cur = null; };
 dc.icon = __icon('docs'); ofRegister(dc);  // (non indenté : les textes sur plusieurs lignes restent exactement les tiens)
   // ---- fin ----
-  ctx.onOpen(() => { ofOpen('doc'); });
+  ctx.onOpen(() => { ofOpen('doc'); requestAnimationFrame(() => { if (dc.zoom == null || dc.zoom === 'fit') dcZoom('fit'); }); });
 }

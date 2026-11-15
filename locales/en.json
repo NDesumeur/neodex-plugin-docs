@@ -102,7 +102,6 @@
  "Titre 3": "Title 3",
  "Traitement de texte : titres, polices, couleurs, listes, tableaux, images, recherche et remplacement, correcteur d'orthographe. Tes documents sont enregistrés tout seuls et synchronisés entre tes PC ; tu peux les exporter en PDF ou en Word.": "Word processing: titles, fonts, colors, lists, tables, images, search and replace, spell checker. Your documents are saved on their own and synchronized between your PCs; you can export them to PDF or Word.",
  "Trebuchet MS": "Trebuchet MS",
- "Un traitement de texte complet : titres et styles, polices, couleurs, listes à puces, numérotées ou de tâches, tableaux, images, liens et sauts de page, rechercher et remplacer, plan du document et correcteur d'orthographe français et anglais. Ouvre les fichiers Word, HTML, Markdown et texte, exporte en PDF, Word, HTML, texte ou Markdown ; tes documents sont enregistrés tout seuls et synchronisés.": "A complete word processor: headings and styles, fonts, colours, bulleted, numbered or task lists, tables, images, links and page breaks, find and replace, document outline and a French and English spell checker. Opens Word, HTML, Markdown and text files, exports to PDF, Word, HTML, text or Markdown; your documents are saved automatically and synced.",
  "Verdana": "Verdana",
  "Word (.doc)…": "Word (.doc)…",
  "Zoom": "Zoom",
@@ -117,5 +116,9 @@
  "← Diminuer le retrait": "← Reduce shrinkage",
  "→ Augmenter le retrait": "→ Increase shrinkage",
  "☐ Liste de tâches": "☐ To-do list",
- "tbPop ofMenu px on": "TbPop ofMenu px on"
+ "tbPop ofMenu px on": "TbPop ofMenu px on",
+ "Un traitement de texte complet : titres et styles, polices, couleurs, listes à puces, numérotées ou de tâches, tableaux, images, liens et sauts de page, rechercher et remplacer, plan du document et correcteur d'orthographe français et anglais. Ouvre les fichiers Word, HTML, Markdown et texte, exporte en PDF, Word, HTML, texte ou Markdown ; tes documents sont enregistrés tout seuls et synchronisés. Mode lecture plein écran (📖 : rien que la page, A− / A+ pour la taille, Échap pour sortir) ; la page s'ajuste à la largeur sur les petits écrans, colonne, barre d'outils et textes plus grands.": "A complete word processor: headings and styles, fonts, colours, bulleted, numbered or task lists, tables, images, links and page breaks, find and replace, document outline and a French and English spell checker. Opens Word, HTML, Markdown and text files, exports to PDF, Word, HTML, text or Markdown; your documents are saved automatically and synced. Full-screen reading mode (📖: just the page, A− / A+ for size, Esc to leave); the page fits the width on small screens, larger column, toolbar and text.",
+ "Lecture plein écran (Échap pour sortir)": "Full-screen reading (Esc to leave)",
+ "Ajuster à la largeur": "Fit to width",
+ "QUITTER LA LECTURE": "LEAVE READING"
 }

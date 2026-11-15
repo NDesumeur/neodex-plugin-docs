@@ -47,3 +47,7 @@ Your documents are stored by NeoDex, backed up and synced between your PCs when 
 In NeoDex: **NeoStore → Discover → NeoDocs → Install**.
 
 Building a plugin: see the [NeoDex SDK](https://github.com/NDesumeur/neodex-sdk).
+
+## Full-screen reading
+
+The 📖 toolbar button shows the document alone, full screen, so you can't change it by accident. **A−** and **A+** change the size, **Esc** or **Leave reading** takes you back to editing. On a small screen, the page fits the width (Zoom menu: "Fit to width").

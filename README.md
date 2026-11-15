@@ -47,3 +47,7 @@ Tes documents sont enregistrés par NeoDex, sauvegardés et synchronisés entre 
 Dans NeoDex : **NeoStore → À découvrir → NeoDocs → Installer**.
 
 Développer un plugin : voir le [SDK NeoDex](https://github.com/NDesumeur/neodex-sdk).
+
+## Lecture plein écran
+
+Le bouton 📖 de la barre d'outils montre le document seul, en plein écran, sans pouvoir le modifier par mégarde. **A−** et **A+** changent la taille, **Échap** ou **Quitter la lecture** te ramène à l'édition. Sur un petit écran, la page s'ajuste à la largeur (menu Zoom : « Ajuster à la largeur »).
