@@ -72,6 +72,9 @@ const HTML = "";
 .dcOl:hover{color:#fff;background:rgba(var(--mgr),.15)}
 .dcOl.l2{padding-left:18px}
 .dcOl.l3{padding-left:30px;font-size:14px}
+.dcPage .dcCmt{background:#fff1b8;border-bottom:2px solid #f0a020;cursor:help}.dcPage .dcCmt.dcFlash{background:#ffd54a}
+.dcNote{display:flex;flex-direction:column;gap:4px;padding:6px 0;border-bottom:1px dashed var(--line)}.dcNoteT{font-size:15px;color:#fff;white-space:pre-wrap;word-break:break-word}
+.dcNote .row{display:flex;gap:4px;flex-wrap:wrap}.dcNote .btn{width:auto;margin:0;padding:4px 8px;font-size:13px}
 .dcFind{display:none;gap:6px;align-items:center;padding:8px 14px;--fill:var(--win)}
 .dcFind.on{display:flex}
 .dcFind input{width:clamp(180px,14vw,280px);padding:7px 10px;font-size:15px}
@@ -300,7 +303,8 @@ const dc = {kind: 'doc', key: 'neodex:docs', view: 'docsApp', name: 'NeoDocs', n
   newData: () => ({html: '<h1>Sans titre</h1><p><br></p>'}),
   fromImport: r => ({html: dcClean(r.html) || '<p><br></p>'}),
   toExport(f, format) {
-    const html = f.data.html, page = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>${ofEsc(f.name)}</title><style>${DC_CSS}${format === 'pdf' ? '' : 'body{max-width:760px;margin:40px auto;padding:0 24px}'}</style></head><body>${html}</body></html>`;
+    const tmp = el('div'); tmp.innerHTML = f.data.html; tmp.querySelectorAll('.dcCmt').forEach(c => c.replaceWith(...c.childNodes));
+    const html = tmp.innerHTML, page = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>${ofEsc(f.name)}</title><style>${DC_CSS}${format === 'pdf' ? '' : 'body{max-width:760px;margin:40px auto;padding:0 24px}'}</style></head><body>${html}</body></html>`;
     if (format === 'txt') return {text: dcText(html)};
     if (format === 'md') return {text: dcMd(html)};
     if (format === 'doc') return {html: `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>${DC_CSS}</style></head><body>${html}</body></html>`};
@@ -364,7 +368,7 @@ dc.mount = main => {
       ['Saut de page', () => cmd('insertHTML', '<hr class="dcBreak"><p><br></p>')], ['Date du jour', () => cmd('insertText', new Date().toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}))]], 'Insérer'),
     ofDrop('Image', [['25 % de la largeur', () => dcImg('25%')], ['50 %', () => dcImg('50%')], ['75 %', () => dcImg('75%')], ['Pleine largeur', () => dcImg('100%')], ['Supprimer l\'image', () => { dc.img?.remove(); dc.img = null; dcChanged(); }]], 'Taille de l\'image cliquée'),
     ofBtn('⌫', 'Effacer la mise en forme', () => { cmd('removeFormat'); cmd('formatBlock', 'p'); }), el('i', 'ofSep'),
-    ofBtn('🔍', 'Rechercher et remplacer (Ctrl+H dans le document)', () => dcFindOpen()), ofBtn('☰', 'Plan du document', () => { outline.classList.toggle('on'); dcOutline(); }),
+    ofBtn('🔍', 'Rechercher et remplacer (Ctrl+H dans le document)', () => dcFindOpen()), ofBtn('☰', 'Plan du document', () => dcPanel('plan')), ofBtn('💬', 'Commenter le passage choisi (Ctrl+Alt+M)', () => dcComment()), ofBtn('🕘', 'Versions du document', () => dcPanel('vers')),
     ofBtn('📖', 'Lecture plein écran (Échap pour sortir)', () => dcRead(true), 'dcReadB'),
     ofDrop('Zoom', [['Ajuster à la largeur', () => dcZoom('fit')], ['75 %', () => dcZoom(.75)], ['100 %', () => dcZoom(1)], ['125 %', () => dcZoom(1.25)], ['150 %', () => dcZoom(1.5)]], 'Zoom'),
     ofDrop('Exporter', [['PDF…', () => ofExport(dc, 'pdf')], ['Word (.doc)…', () => ofExport(dc, 'doc')], ['Page web (.html)…', () => ofExport(dc, 'html')], ['Texte (.txt)…', () => ofExport(dc, 'txt')], ['Markdown (.md)…', () => ofExport(dc, 'md')]], 'Exporter le document'),
@@ -395,7 +399,7 @@ dc.mount = main => {
     const a = e.target.closest('a');
     if (a && (e.ctrlKey || e.metaKey)) newTab(a.href);
   };
-  page.onkeydown = e => { if (e.ctrlKey && e.key === 'h') { e.preventDefault(); dcFindOpen(); } if (e.key === 'Tab') { e.preventDefault(); cmd(e.shiftKey ? 'outdent' : 'indent'); } };
+  page.onkeydown = e => { if (e.ctrlKey && e.key === 'h') { e.preventDefault(); dcFindOpen(); } if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'm') { e.preventDefault(); dcComment(); } if (e.key === 'Tab') { e.preventDefault(); cmd(e.shiftKey ? 'outdent' : 'indent'); } };
   document.addEventListener('selectionchange', () => { if (dc.cur && page.contains(getSelection().anchorNode)) dcToolbarState(); });
 };
 let dcTimer = null;
@@ -403,7 +407,7 @@ function dcChanged() {
   if (!dc.cur) return;
   dc.cur.data.html = dc.page.innerHTML; dc.cur.t = Date.now(); officeSave();
   clearTimeout(dcTimer); dcTimer = setTimeout(() => { ofList(dc); dcStatus(); if (dc.outline.classList.contains('on')) dcOutline(); }, 500);
-  clearTimeout(dc.spellT); dc.spellT = setTimeout(dcSpell, 1500);
+  clearTimeout(dc.spellT); dc.spellT = setTimeout(dcSpell, 1500); dcSnap();
 }
 function dcStatus() {
   const text = dc.page.innerText, words = (text.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) || []).length, pages = Math.max(1, Math.ceil(dc.page.scrollHeight / 1123));
@@ -450,7 +454,48 @@ function dcRead(on) {  // la lecture : rien que la page, en plein écran, sans p
 }
 document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && dc.reading) dcRead(false); else if (dc.reading) dcZoom('fit'); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && dc.reading) { e.preventDefault(); dcRead(false); } });
+// le panneau de droite : le plan, les commentaires ou les versions
+function dcPanel(p) { const on = dc.outline.classList.contains('on') && dc.panel === p; dc.panel = p; dc.outline.classList.toggle('on', !on); dcOutline(); }
+// les commentaires : le passage choisi est entouré d'un <span class="dcCmt" data-note="…"> ; « Résolu » retire le commentaire, le texte reste
+async function dcComment(note) {
+  const s = getSelection(); if (!s.rangeCount || s.isCollapsed || !dc.page.contains(s.anchorNode)) return toast('Choisis d\'abord le passage à commenter', true);
+  const r = s.getRangeAt(0).cloneRange(); note = (note ?? await ask('Ton commentaire'))?.trim(); if (!note) return;
+  const sp = el('span', 'dcCmt'); sp.dataset.note = sp.title = note; sp.append(r.extractContents()); r.insertNode(sp); s.removeAllRanges();
+  dc.panel = 'notes'; dc.outline.classList.add('on'); dcChanged(); dcOutline();
+}
+function dcNotes() {
+  const cs = [...dc.page.querySelectorAll('.dcCmt')];
+  dc.outline.replaceChildren(el('span', 'label', 'Commentaires (' + cs.length + ')'), ...(cs.length ? cs.map(c => {
+    const d = el('div', 'dcNote'), q = el('button', 'dcOl', '« ' + c.textContent.slice(0, 60) + (c.textContent.length > 60 ? '…' : '') + ' »'), row = el('div', 'row');
+    q.onclick = () => { c.scrollIntoView({block: 'center', behavior: 'smooth'}); c.classList.add('dcFlash'); setTimeout(() => c.classList.remove('dcFlash'), 900); };
+    const ed = el('button', 'btn px', 'MODIFIER'), ok = el('button', 'btn px', 'RÉSOLU'); ok.title = 'Retirer le commentaire (le texte reste)';
+    ed.onclick = async () => { const n = (await ask('Ton commentaire', c.dataset.note))?.trim(); if (n) { c.dataset.note = c.title = n; dcChanged(); dcOutline(); } };
+    ok.onclick = () => { c.replaceWith(...c.childNodes); dcChanged(); dcOutline(); };
+    row.append(ed, ok); d.append(q, el('div', 'dcNoteT', c.dataset.note), row); return d;
+  }) : [el('div', 'hint', 'Choisis un passage puis 💬 (ou Ctrl+Alt+M) pour le commenter.')]));
+}
+// les versions : gardées sur ce PC seulement (« local-versions » ne voyage pas, les images rendraient la synchro lourde), à l'ouverture et toutes les 10 minutes d'écriture, 20 par document au plus
+let dcV = null;
+const dcVReady = async () => dcV ??= (await __storeGet('local-versions').catch(() => null)) || {};
+async function dcSnap(force) {
+  const f = dc.cur; if (!f) return; await dcVReady(); const l = dcV[f.id] ||= [], last = l[0];
+  if (last?.html === f.data.html || !force && last && Date.now() - last.t < 6e5) return false;
+  l.unshift({t: Date.now(), html: f.data.html}); l.length = Math.min(l.length, 20);
+  for (const id in dcV) if (!office.files.some(x => x.id === id)) delete dcV[id];  // les versions des documents supprimés partent aussi
+  await __storeSet('local-versions', dcV).catch(() => {}); return true;
+}
+async function dcVers() {
+  await dcVReady(); const l = dcV[dc.cur?.id] || [], keep = el('button', 'btn px', 'GARDER MAINTENANT');
+  keep.onclick = async () => { toast(await dcSnap(true) ? 'Version gardée' : 'Rien n\'a changé depuis la dernière version'); dcOutline(); };
+  dc.outline.replaceChildren(el('span', 'label', 'Versions'), el('div', 'hint', 'Gardées sur ce PC, à l\'ouverture et toutes les 10 minutes d\'écriture (20 au plus).'), keep, ...l.map(x => {
+    const d = el('div', 'dcNote'), w = (dcText(x.html).match(/[\p{L}\p{N}]+/gu) || []).length, row = el('div', 'row'), back = el('button', 'btn px', 'RESTAURER');
+    back.onclick = async () => { if (!await nbConfirm('Revenir à la version du ' + new Date(x.t).toLocaleString('fr-FR', {day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'}) + ' ? Le texte actuel est gardé dans les versions.')) return;
+      await dcSnap(true); dc.page.innerHTML = x.html; dcChanged(); dcOutline(); toast('Version restaurée'); };
+    row.append(back); d.append(el('b', '', new Date(x.t).toLocaleString('fr-FR', {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'})), el('div', 'hint', w + ' mot' + (w > 1 ? 's' : '') + (x.html === dc.cur.data.html ? ' · c\'est le texte actuel' : '')), row); return d;
+  }));
+}
 function dcOutline() {
+  if (dc.panel === 'notes') return dcNotes(); if (dc.panel === 'vers') return dcVers();
   const hs = [...dc.page.querySelectorAll('h1,h2,h3')];
   dc.outline.replaceChildren(el('span', 'label', 'Plan'), ...(hs.length ? hs.map(h => { const b = el('button', 'dcOl l' + h.nodeName[1], h.textContent || '(titre vide)'); b.onclick = () => h.scrollIntoView({block: 'start', behavior: 'smooth'}); return b; }) : [el('div', 'hint', 'Les titres du document apparaissent ici.')]));
 }
@@ -489,9 +534,10 @@ document.addEventListener('neo-spell-dict', () => dcSpell());
 dc.open = f => {
   dc.cur = f; dc.title.value = f.name; dc.page.innerHTML = f.data.html; dc.img = null;
   if (dc.zoom == null || dc.zoom === 'fit') requestAnimationFrame(() => dcZoom('fit'));
-  neoFindRun(dc.page, '', {}, 0); dc.fr.classList.remove('on'); CSS.highlights?.delete('neo-spell'); dc.spellN = 0; dcStatus(); dcOutline(); setTimeout(dcSpell, 300);
+  neoFindRun(dc.page, '', {}, 0); dc.fr.classList.remove('on'); CSS.highlights?.delete('neo-spell'); dc.spellN = 0; dcStatus(); dcOutline(); setTimeout(dcSpell, 300); dcSnap();
 };
 dc.close = () => { if (dc.reading) dcRead(false); dc.cur = null; };
+view.__dc = {comment: dcComment, snap: dcSnap, panel: dcPanel, versions: dcVReady};  // pour le test « local »
 dc.icon = __icon('docs'); ofRegister(dc);  // (non indenté : les textes sur plusieurs lignes restent exactement les tiens)
   // ---- fin ----
   ctx.onOpen(() => { ofOpen('doc'); requestAnimationFrame(() => { if (dc.zoom == null || dc.zoom === 'fit') dcZoom('fit'); }); });

@@ -1,7 +1,7 @@
 {
   "id": "neodex.docs",
   "name": "NeoDocs",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "author": "NDesumeur",
   "description": "Un traitement de texte complet : titres et styles, polices, couleurs, listes à puces, numérotées ou de tâches, tableaux, images, liens et sauts de page, rechercher et remplacer, plan du document et correcteur d'orthographe français et anglais. Ouvre les fichiers Word, HTML, Markdown et texte, exporte en PDF, Word, HTML, texte ou Markdown ; tes documents sont enregistrés tout seuls et synchronisés. Mode lecture plein écran (📖 : rien que la page, A− / A+ pour la taille, Échap pour sortir) ; la page s'ajuste à la largeur sur les petits écrans, colonne, barre d'outils et textes plus grands.",
   "icon": "icon.png",

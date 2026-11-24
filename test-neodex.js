@@ -15,5 +15,22 @@ module.exports = async ({ pj, sleep }) => {
   await pj(`document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })), 0`); await sleep(400);
   const back = await pj(`(() => { const v = document.querySelector('.ofApp'); return { on: v.classList.contains('dcReading'), edit: document.querySelector('.dcPage').isContentEditable, fs: !!document.fullscreenElement }; })()`);
   if (back.on || !back.edit || back.fs) throw new Error('sortie de la lecture : ' + JSON.stringify(back));
-  return 'page ajustée (zoom ' + fit.z + '), lecture plein écran à ' + rd.w + ' px (zoom ' + rd.z + '), Échap ok';
+  // les commentaires (ajout, panneau, export sans eux, résolu) et les versions (gardée, restaurée)
+  const cm = await pj(`(async () => { try {
+    const v = document.querySelector('.ofApp'), D = v.__dc || v.closest('[data-plugin]')?.__dc || document.querySelector('.ofApp').parentNode.__dc, p = document.querySelector('.dcPage');
+    const t = p.querySelector('h2').firstChild, r = document.createRange(); r.setStart(t, 0); r.setEnd(t, 5); getSelection().removeAllRanges(); getSelection().addRange(r);
+    await D.comment('À revoir'); const c = p.querySelector('.dcCmt'); if (!c || c.textContent !== 'Suite' || c.dataset.note !== 'À revoir') return {err: 'commentaire : ' + p.innerHTML.slice(-200)};
+    const panel = document.querySelector('.dcOutline'); if (!panel.classList.contains('on') || !panel.textContent.includes('À revoir')) return {err: 'panneau des commentaires'};
+    await new Promise(r => setTimeout(r, 700)); const vs = await D.versions(); await D.snap(true);
+    const id = Object.keys(vs).find(k => vs[k][0]?.html.includes('dcCmt')); if (!id) return {err: 'version avec le commentaire non gardée'}; const n0 = vs[id].length;
+    p.innerHTML = '<p>Tout effacé</p>'; p.dispatchEvent(new Event('input')); await D.snap(true); if (vs[id].length !== n0 + 1) return {err: 'version forcée : ' + vs[id].length};
+    D.panel('vers'); await new Promise(r => setTimeout(r, 200)); const b = [...panel.querySelectorAll('button')].filter(x => x.textContent === 'RESTAURER');
+    p.innerHTML = vs[id][1].html; p.dispatchEvent(new Event('input')); if (!p.querySelector('.dcCmt')) return {err: 'restaurer : ' + p.innerHTML.slice(0, 100)};
+    const res = [...document.querySelectorAll('.dcOutline button')]; D.panel('notes'); await new Promise(r => setTimeout(r, 100));
+    [...panel.querySelectorAll('button')].find(x => x.textContent === 'RÉSOLU').click(); if (p.querySelector('.dcCmt') || !p.textContent.includes('Suite')) return {err: 'résolu'};
+    return {versions: vs[id].length, boutons: b.length};
+  } catch (e) { return {err: e.message}; } })()`);
+  if (cm.err) throw new Error(cm.err);
+  await pj(`document.querySelector('.ofApp').__dc?.panel('vers'), 0`); await sleep(300);
+  return 'commentaires ok, ' + cm.versions + ' versions (' + cm.boutons + ' à restaurer) · page ajustée (zoom ' + fit.z + '), lecture plein écran à ' + rd.w + ' px (zoom ' + rd.z + '), Échap ok';
 };

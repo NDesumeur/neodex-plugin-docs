@@ -4,6 +4,10 @@ A complete word processor in NeoDex: write, format, insert tables and images, ch
 
 *Version française : [README.md](README.md)*
 
+## Comments and versions (new in 1.3.0)
+
+Comment on a passage (💬 or Ctrl+Alt+M), list of comments on the right (go, edit, resolved); version history (on open and every 10 min, 20 at most) with Restore.
+
 ## Documents
 
 - The left list shows your documents, newest first, with a search by name. **+ New** creates one, **Open…** imports a file from your PC: Word (`.docx`), web page (`.html`), Markdown (`.md`) or text (`.txt`).
@@ -33,6 +37,11 @@ A complete word processor in NeoDex: write, format, insert tables and images, ch
 - Page **zoom**.
 - French and English **spell checker**: unknown words are underlined, **right-click** to see suggestions.
 - The bottom bar counts **words**, **characters**, **pages** (approximately), **reading time** and words to check.
+
+## Comments and versions (1.3.0)
+
+- **💬 Comment** (or Ctrl+Alt+M): select a passage, write your comment. The passage is highlighted in yellow; the right panel lists every comment (click to go there, Edit, Resolved). Comments are left out of exports.
+- **🕘 Versions**: a version is kept when the document opens and every 10 minutes of writing (20 at most, on this PC only). "Keep now" adds one; "Restore" goes back, and the current text stays in the versions.
 
 ## Export
 

@@ -4,6 +4,10 @@ Un traitement de texte complet dans NeoDex : écris, mets en forme, insère tabl
 
 *English version: [README.en.md](README.en.md)*
 
+## Commentaires et versions (nouveau en 1.3.0)
+
+Commenter un passage (💬 ou Ctrl+Alt+M), liste des commentaires à droite (aller, modifier, résolu) ; historique des versions (à l'ouverture et toutes les 10 min, 20 au plus) avec Restaurer.
+
 ## Les documents
 
 - La liste de gauche montre tes documents, du plus récent au plus ancien, avec une recherche par nom. **+ Nouveau** en crée un, **Ouvrir…** importe un fichier de ton PC : Word (`.docx`), page web (`.html`), Markdown (`.md`) ou texte (`.txt`).
@@ -33,6 +37,11 @@ Un traitement de texte complet dans NeoDex : écris, mets en forme, insère tabl
 - **Zoom** de la page.
 - **Correcteur d'orthographe** français et anglais : les mots inconnus sont soulignés, **clic droit** pour voir les suggestions.
 - La barre du bas compte les **mots**, les **caractères**, les **pages** (environ), le **temps de lecture** et les mots à vérifier.
+
+## Commentaires et versions (1.3.0)
+
+- **💬 Commenter** (ou Ctrl+Alt+M) : choisis un passage, écris ton commentaire. Le passage est surligné en jaune ; le panneau de droite liste tous les commentaires (clic pour y aller, Modifier, Résolu). Les commentaires ne partent pas dans les exports.
+- **🕘 Versions** : une version est gardée à l’ouverture du document et toutes les 10 minutes d’écriture (20 au plus, sur ce PC seulement). « Garder maintenant » en ajoute une ; « Restaurer » revient en arrière, et le texte actuel reste dans les versions.
 
 ## Exporter
 
